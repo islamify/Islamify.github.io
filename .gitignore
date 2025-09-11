@@ -1,0 +1,9 @@
+# MkDocs build output
+site/
+
+# Python cache (in case you use plugins locally)
+__pycache__/
+*.pyc
+
+# VS Code settings (optional, keeps local config out of repo)
+.vscode/

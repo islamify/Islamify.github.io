@@ -3,20 +3,22 @@ name: Deploy MkDocs site
 on:
   push:
     branches:
-      - main  # or master if your default branch is master
+      - main
+
+permissions:
+  contents: write   # <-- this is the key!
 
 jobs:
-  build-deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          python-version: "3.x"
+          python-version: '3.x'
 
       - name: Install dependencies
         run: |
