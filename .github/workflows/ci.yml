@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:   # <-- adds the "Run workflow" button in GitHub UI
+  workflow_dispatch:   # <-- allows manual trigger
 
 permissions:
   contents: write   # allow GitHub Actions to push to gh-pages
@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0   # <-- needed so we can list tags
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -25,6 +27,29 @@ jobs:
       - name: Install dependencies
         run: |
           pip install mkdocs-material
+
+      - name: Create auto-backup tag
+        run: |
+          TIMESTAMP=$(date +'%Y%m%d-%H%M%S')
+          TAG="backup-ci-$TIMESTAMP"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag $TAG
+          git push origin $TAG
+          echo "✅ Created auto-backup tag: $TAG"
+
+      - name: Prune old auto-backup tags (keep last 5)
+        run: |
+          TAGS=$(git tag -l "backup-ci-*" | sort)
+          COUNT=$(echo "$TAGS" | wc -l)
+          if [ "$COUNT" -gt 5 ]; then
+            REMOVE=$(echo "$TAGS" | head -n $(($COUNT - 5)))
+            for tag in $REMOVE; do
+              echo "🗑️ Removing old CI backup tag: $tag"
+              git tag -d $tag
+              git push origin :refs/tags/$tag
+            done
+          fi
 
       - name: Deploy to GitHub Pages
         run: |
