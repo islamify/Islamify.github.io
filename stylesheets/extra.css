@@ -1,0 +1,174 @@
+/* --------------------------------------------------------
+   Islamify - Extra CSS
+   Structure handled in mkdocs.yml
+   Design handled here only
+   -------------------------------------------------------- */
+
+/* 1. Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap');
+
+/* 2. Base typography */
+body,
+.md-typeset,
+.md-header,
+.md-nav,
+.md-footer {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* Code blocks */
+code, pre, kbd {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9em;
+}
+
+/* 3. Remove transitions for instant toggle */
+:root {
+  --md-transition-duration: 0s !important;
+}
+* {
+  transition: none !important;
+}
+
+/* 4. Light mode palette (clean, newspaper style) */
+[data-md-color-scheme="default"] {
+  --md-default-bg-color: #f7f7f7;
+  --md-default-fg-color: #222222;
+  --md-code-bg-color: #eeeeee;
+  --md-accent-fg-color: #000000;
+
+  /* Header/Nav/Footer */
+  --md-primary-fg-color: #000000;
+  --md-primary-bg-color: #ffffff;
+
+  /* Navigation colors */
+  --nav-hover-bg: rgba(0,0,0,0.05);
+  --nav-active-bg: rgba(0,0,0,0.1);
+
+  /* Footer */
+  --footer-bg: #eaeaea;
+  --footer-fg: #111111;
+  --footer-link: #000000;
+  --footer-link-hover: #333333;
+}
+
+/* 5. Dark mode palette (easy on eyes) */
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color: #111111;
+  --md-default-fg-color: #e0e0e0;
+  --md-code-bg-color: #1a1a1a;
+  --md-accent-fg-color: #ffffff;
+
+  /* Header/Nav/Footer */
+  --md-primary-fg-color: #e0e0e0;
+  --md-primary-bg-color: #000000;
+
+  /* Navigation colors */
+  --nav-hover-bg: rgba(255,255,255,0.08);
+  --nav-active-bg: rgba(255,255,255,0.15);
+
+  /* Footer */
+  --footer-bg: #1a1a1a;
+  --footer-fg: #eeeeee;
+  --footer-link: #ffffff;
+  --footer-link-hover: #cccccc;
+}
+
+/* 6. Navigation + Header adjustments */
+.md-header, .md-tabs, .md-nav {
+  background-color: var(--md-primary-bg-color) !important;
+  color: var(--md-primary-fg-color) !important;
+}
+
+.md-header__title, .md-tabs__link, .md-nav__title {
+  color: var(--md-primary-fg-color) !important;
+}
+
+/* 7. Links */
+
+/* Body/content links (newspaper style) */
+.md-typeset a {
+  color: inherit !important;
+  text-decoration: underline !important;
+}
+.md-typeset a:visited {
+  color: inherit !important;
+}
+.md-typeset a:hover {
+  text-decoration: none !important;
+}
+
+/* Navigation & footer links (no underline, clearer active state) */
+.md-nav a,
+.md-footer a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+.md-nav a:hover,
+.md-footer a:hover {
+  color: var(--md-accent-fg-color) !important;
+}
+
+/* Active/current nav item highlight */
+.md-nav__link:hover {
+  background-color: var(--nav-hover-bg) !important;
+  border-radius: 4px;
+}
+.md-nav__link--active {
+  background-color: var(--nav-active-bg) !important;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+/* ============================
+   Footer styling
+   ============================ */
+.md-footer {
+  background-color: var(--footer-bg) !important;
+  color: var(--footer-fg) !important;
+}
+
+.md-footer a {
+  color: var(--footer-link) !important;
+  text-decoration: underline;
+}
+.md-footer a:hover {
+  color: var(--footer-link-hover) !important;
+}
+
+/* ============================
+   Print styles
+   ============================ */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: 'Quicksand', sans-serif;
+  }
+
+  .md-header,
+  .md-footer,
+  .md-tabs,
+  .md-nav {
+    display: none !important; /* hide nav/header/footer when printing */
+  }
+
+  a {
+    color: #000000 !important;
+    text-decoration: underline !important;
+  }
+
+  code, pre {
+    background: #f5f5f5 !important;
+    color: #000000 !important;
+  }
+}
